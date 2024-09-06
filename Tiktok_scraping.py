@@ -55,7 +55,7 @@ for i in tqdm(range(num // 20 + 1)):
     # Process each comment
     for i in comments:
         name = i["user"]["nickname"]  # User nickname
-        ip = i["ip_label"]  # User IP address label
+        province = i["ip_label"]  # User province label
         comment = i["text"]  # Comment content
         time = datetime.datetime.fromtimestamp(i["create_time"])  # Comment timestamp
         
@@ -74,18 +74,18 @@ for i in tqdm(range(num // 20 + 1)):
         
         # Update comment count and add the comment details to the list
         nums += 1
-        info_lists.append([name, ip, comment, time, reply_comment_total, digg_count])
+        info_lists.append([name, province, comment, time, reply_comment_total, digg_count])
     
     # Check if there are no more comments to load
     try:
-        if page.ele("text:暂时没有更多评论", timeout=1):
+        if page.ele("text:No further comments for now", timeout=1):
             break
     except Exception as e:
         pass
 
 # Print the total number of collected comments
-print("最终采集条数为：", nums)
+print("The final number of collected items is：", nums)
 
 # Save the collected data to an Excel file
-df = pd.DataFrame(info_lists, columns=['用户名', 'IP', '评论', '时间', "回复数", "点赞数"])
+df = pd.DataFrame(info_lists, columns=[ 'province', 'comment', 'time', "replies", "Number of likes"])
 df.to_excel(f"{title}.xlsx", index=False)

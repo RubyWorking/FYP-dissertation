@@ -65,7 +65,7 @@ def crawl(id111):
                             useful_count = page.ele('@class=btn useful_count ', timeout=2).text.replace('Useful', '')  # Useful count
                             useless_count = page.ele('@class=btn useless_count ', timeout=2).text.replace('Useless', '')  # Useless count
                             reply_count = page.ele('@class=react-num', timeout=2).text  # Reply count
-                            ip = page.eles('x://div[@class="main-meta"]//span', timeout=2)[-1].text  # Get IP address
+                            province = page.eles('x://div[@class="main-meta"]//span', timeout=2)[-1].text  # Get IP address
                         except Exception as e:
                             pass
                         else:
@@ -74,7 +74,7 @@ def crawl(id111):
                             # Add review information to the recorder
                             recorder.add_data((
                                 nick_name, create_time, content, score_level, useful_count, useless_count,
-                                reply_count, ip))
+                                reply_count, province))
                     recorder.record()  # Save the data for the current page
     recorder.record()  # Final data save
 
